@@ -1,0 +1,85 @@
+name: Release Artifacts to Maven Central
+
+on:
+  release:
+    types: [ created ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+      - name: maven-settings-xml-action
+        uses: whelk-io/maven-settings-xml-action@v22
+        with:
+          servers: '[{ "id": "${repo.id}", "username": "${repo.user}", "password": "${repo.pass}" }]'
+
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+      - name: List keys
+        run: gpg -K
+
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "ollama4j-ui-revision"
+          replace: ${{ github.ref_name }}
+          regex: false
+
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "mvn-repo-id"
+          replace: central
+          regex: false
+
+      - name: Build with Maven
+        run: mvn -B clean install package -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Upload Release Asset - JAR
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: target/ollama4j-ui-${{ github.ref_name }}.jar
+          asset_name: ollama4j-ui-${{ github.ref_name }}.jar
+          asset_content_type: application/x-jar
+
+      - name: Upload Release Asset - Javadoc JAR
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: target/ollama4j-ui-${{ github.ref_name }}-javadoc.jar
+          asset_name: ollama4j-ui-${{ github.ref_name }}-javadoc.jar
+          asset_content_type: application/x-jar
+
+      - name: Upload Release Asset - Sources JAR
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: target/ollama4j-ui-${{ github.ref_name }}-sources.jar
+          asset_name: ollama4j-ui-${{ github.ref_name }}-sources.jar
+          asset_content_type: application/x-jar
