@@ -36,6 +36,7 @@ java -jar /path/to/ollama4j-ui-<version>.jar
   <img width="767" alt="List downloaded models" src="https://github.com/user-attachments/assets/75f9c864-784a-4f75-ad50-9e2ecb014e50" />
   <img width="733" alt="List models available for download" src="https://github.com/user-attachments/assets/81db35b0-eb25-4a73-a6c3-e50d2be803c4" />
 </p>
+
 ## ⭐ Give us a Star!
 
 If you like or are using this project to build your own, please give us a star. It's a free way to show your support.
