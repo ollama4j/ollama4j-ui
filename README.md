@@ -33,7 +33,7 @@ java -jar /path/to/ollama4j-ui-<version>.jar
 - Chat with tools with tool-calling models such as [Mistral](https://ollama.com/library/mistral).
 - List downloaded models on Ollama server.
 - List available models on Ollama model repository.
-- View settings. Uses the ~/ollama4j-ui/ollama4j-ui.properties file for settings. (The file is created on startup if it does not exist)
+- View settings. Uses the `~/ollama4j-ui/ollama4j-ui.properties` file for settings. (The file is created on startup if it does not exist)
 
 <p align="center">
   <img width="845" alt="Chat using tools" src="https://github.com/user-attachments/assets/9b7cbfc0-dff1-402f-b60e-75fb9d62b41e" />
