@@ -17,7 +17,7 @@ Simple UI for Ollama built in Java with Swing and Ollama4j
 
 ## Download and Run
 
-Find the latest release [here](https://github.com/ollama4j/ollama4j-ui/releases) and run the command:
+Find the latest release [here](https://github.com/ollama4j/ollama4j-ui/releases) annd download the `.jar` file. Then, run the following command:
 
 ```bash
 java -jar /path/to/ollama4j-ui-<version>.jar
