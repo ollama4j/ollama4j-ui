@@ -1,4 +1,4 @@
-### Ollama4j UI
+# Ollama4j UI
 
 <p align="center">
   <img src='https://raw.githubusercontent.com/ollama4j/ollama4j/65a9d526150da8fcd98e2af6a164f055572bf722/ollama4j.jpeg' width='100' alt="ollama4j-icon">
